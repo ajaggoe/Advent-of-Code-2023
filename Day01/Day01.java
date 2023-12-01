@@ -8,9 +8,9 @@ import java.util.*;
 public class Day01 {
 
     public static void main(String[] args) {
-        int part1 = part1();
+        // int part1 = part1();
         int part2 = part2();
-        System.out.println("Part 1: "+part1);
+        // System.out.println("Part 1: "+part1);
         System.out.println("Part 2: "+part2);
         
     }
@@ -21,18 +21,12 @@ public class Day01 {
             int total = 0;
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
-                
                 String clean = line.replaceAll("\\D+", "");
                 
-                if(line.length() > 1){
-                    int x = Integer.valueOf(clean.charAt(0)+""+clean.charAt(clean.length()-1));
-                    total+= x;
-                }
-                else{
-                    int x = Integer.valueOf(clean +""+clean);
-                    total+=x;
-                }
-                
+                int x;
+                if(line.length() > 1) x = Integer.valueOf(clean.charAt(0)+""+clean.charAt(clean.length()-1));
+                else x = Integer.valueOf(clean +""+clean);
+                total+= x;
             }
             return total;
         } catch (Exception e) {
@@ -45,8 +39,6 @@ public class Day01 {
         try {
             Scanner sc = new Scanner(new File("Day01/input.txt"));
             int total = 0;
-            int j = 0;
-
             while(sc.hasNextLine()){
                 String line = sc.nextLine();
                 Map<String, Integer> map = Map.of("one", 1, "two", 2, "three", 3, "four", 4,"five",5, "six", 6,"seven", 7,"eight", 8,"nine",9);
@@ -63,8 +55,6 @@ public class Day01 {
                     int x = Integer.valueOf(clean +""+clean);
                     total+=x;
                 }
-                j++;
-
             }
             return(total);
         } catch (Exception e) {
@@ -74,10 +64,12 @@ public class Day01 {
     }
 
     public static String parseFirst(String line, Map<String, Integer> map){
-        for(int i = 1; i < line.length(); i++){
-            for(String key : map.keySet()){
-                if(line.substring(0, i).contains(key)) {
-                    line = line.replaceFirst(key, ""+map.get(key));
+        for(int i = 0; i < line.length(); i++){
+            for(int j = i; j < line.length(); j++){
+                String sub = line.substring(i, j);
+                if(sub.matches("[0-9]")) return line;
+                if(map.keySet().contains(sub)) {
+                    line = line.replaceFirst(sub, ""+map.get(sub));
                     return line;
                 }
             }
@@ -87,15 +79,13 @@ public class Day01 {
 
     public static String parseLast(String line, Map<String, Integer> map){
         for(int i = line.length()-1; i >= 0; i--){
-
-            for(String key : map.keySet()){
-                String sub = line.substring(i, line.length());
-                if(sub.contains(key)) {
-                    String sub2 = sub.replaceFirst(key, ""+map.get(key));
-                    System.out.println(line);
-                    System.out.println("HALLOOOO--"+line.substring(i, line.length()).replaceFirst(key, sub2));
-                    line = line.replaceFirst(key, sub2);
-                    return line;
+            for(int j = i+1; j <= line.length(); j++){
+                String sub = line.substring(i, j);
+                if(sub.matches("[0-9]")) return line;
+                if(map.keySet().contains(sub)) {
+                    StringBuffer buffer = new StringBuffer(line);
+                    buffer.replace(i, j, ""+map.get(sub));
+                    return buffer.toString();
                 }
             }
         }
