@@ -2,6 +2,7 @@
 My first edition of Advent of Code 2023 - in Java and (hopefully) Rust
 
 
-| Day      | Stars |
-| -------- | ------- |
-| Day 1   | ⭐⭐   |
+| Day      | Part 1  | Part 2 |
+| -------- | ------- |------- |
+| Day 1    |⭐       |⭐     |
+| Day 2    |⭐       |⭐     |
